@@ -416,16 +416,16 @@ function enterMain() {
   let name = document.getElementById('nameInput').value.trim();
   document.getElementById('mainUI').innerHTML = `
     <div class="mainPage-content">
-      <div class="big-welcome">欢迎来到朝奈津学園，<span>${name || '匿名'}</span>同学！</div>
+      <div class="big-welcome">欢迎来到朝奈津学園，<span>${name || '匿名'}</span>！</div>
       <div class="scroll-logs">
-        <span class="log-txt" id="logText">校园论坛热帖：《我的第一场水母大战》</span>
+        <span class="log-txt" id="logText">力量不是为了骄傲，而是应该被理解的。</span>
       </div>
       <div class="sections-grid">
         <!-- 校园介绍 -->
         <div class="section-card" onclick="toggleDetail(this)">
           <div class="section-title">🏫 校园介绍</div>
           <div class="section-detail">
-             <b>校名：</b>朝奈津学園<br>
+            <b>校名：</b>朝奈津学園<br>
             <b>课程设置：</b>各班级均开设国语、数学、外语、历史、公民五大常规课程，上课频率为1周2次。此外，依据各班级特色对以下课程作出特殊安排：
 化学课：「元素系」每周课时6节，其余班级每周课时2节，分别由两位研究员教师担任教学，元素系化学教师兼任班主任职务。名牌略写为元素系-班主任。
 
@@ -447,21 +447,18 @@ function enterMain() {
               <b>姓名:</b> 冴岛硫花<br>
               <b>性别:</b> 女<br>
               <b>年龄:</b> 25<br>
-              <b>班级:</b> 元素系—班主任<br>
-             <b>爱好与特长:</b> 没有任何特长和擅长任何事似乎是同一个概念。<br>
-              <b>简介:</b> 1996年：日本化学会优秀修士论文奖
-            	1998年：「複合分子構造における新規結合手法」获选日本高分子科学年会特别发表论文
-              学园第一届「吞食吧！荞麦面！」大赛冠军<br>
-              <b>宣言:</b>信任最高 ᕦ( ˘ᴗ˘ )ᕤ<br>
-            
-            </div>
+              <b>班级:</b> 元素系-班主任<br>
+              <b>爱好与特长:</b> 没有特长和擅长任何事似乎是同一个概念。<br>
+              <b>简介:</b> 1996年：日本化学会优秀修士论文奖，1998年：「複合分子構造における新規結合手法」获选日本高分子科学年会特别发表论文，2000年，学园第一届「吞食吧！荞麦面！」大赛冠军。<br>
+              <b>宣言:</b> 信任最高 ᕦ( ˘ᴗ˘ )ᕤ<br>
+            </div> 
           </div>
         </div>
         <!-- 便利贴墙 -->
         <div class="section-card" onclick="toggleNoteBar(this)">
           <div class="section-title">📒 留言板</div>
           <div class="note-bar">
-            <div class="note-brief" onclick="event.stopPropagation();showNoteDetail(0)">“【急募】谁来阻止下我的舍友！？”</div>
+            <div class="note-brief" onclick="event.stopPropagation();showNoteDetail(0)">“【急募】谁来阻止下我的舍友！?”</div>
             <div class="note-brief" onclick="event.stopPropagation();showNoteDetail(1)">“元素系期末实验爆炸！助理君转生为飞行员？”</div>
             <div class="note-brief" onclick="event.stopPropagation();showNoteDetail(2)">“【咨询】精神系的同学在梦里给我穿女仆服的事”</div>
             <div class="note-brief" onclick="event.stopPropagation();showNoteDetail(3)">“女生宿舍的洗衣机里萌生了人格？正在随意区分衣服的颜色”</div>
@@ -482,7 +479,7 @@ function enterMain() {
         </div>
       </div>
       <div class="footer-random">
-        <button onclick="randomLucky()">点我获得今日幸运词汇</button>
+        <button onclick="randomLucky()">点我获得今日幸运占卜</button>
         <div class="quote" id="luckyWord"></div>
       </div>
     </div>
@@ -507,13 +504,10 @@ function toggleNoteBar(card) {
 }
 function showNoteDetail(idx) {
   const notes = [
-    "“2000/07/15(星期六) 00:04:29 ID:GYUZUUU 动物系的我的室友（猫系），昨晚又倒着爬墙的事......而且光着脚.....真的别这样啊！？”",
+    "“动物系的我的室友（猫系），昨晚又倒着爬墙的事......而且光着脚.....真的别这样啊！？”",
     "“本该学习水蒸气的再利用....但是氧气瓶倒下了！酒精灯倒下了！？然后有人拿着的氢气气球...结果教室大门完全飞走了！💧巨大的声音和超高速运动门袭击了助理君..像在驾驶战斗机一样ww”",
-    "“他说，“你穿着女仆服说'照烧鲭鱼套餐，主人♡'”
-    怎么能在梦里反击呢...”",
-    "“报告说黑色内衣和灰色袜子在同一个篮子里，只有白色制服被热水洗了。
-是精神系的影响，还是某人的实验结果...？
-→作为对策：在洗衣机上贴上“我不是实验品！”的贴纸。”"
+    "“他说，「你穿着女仆服说'照烧鲭鱼套餐，主人♡」。...该怎样在梦里反击呢？”",
+    "“报告说黑色内衣和灰色袜子在同一个篮子里，只有白色制服被热水洗了。是精神系的影响，还是某人的实验结果...？→作为对策：在洗衣机上贴上“我不是实验品！”的贴纸。”"
   ];
   let noteBox = document.getElementById('noteDetailBox');
   noteBox.textContent = notes[idx];
@@ -528,14 +522,14 @@ function showFaqDetail(idx) {
 
 // 幸运占卜
 const luckyWords = [
-  "蛋包饭", "咖喱鱼饼", "荞麦面", "玉子烧", "中华小笼包",
-  "地狱拉面", "可乐饼", "VIvi", "起司汉堡包", "奶油意面沙拉杯",
-  "大阪烧", "炒面面包", "蜜汁红豆烧", "鳗鱼饭团", "芝士夹心汉堡排",
-  "哈密瓜汽水圣代", "酱汁炸猪排盖饭", "番茄酱铁板盖饭", "水果奶油三明治", "草莓香蕉松饼塔"
+  "照烧鸡扒蛋包饭", "咖喱鱼饼", "中华小笼包", "地狱叉烧拉面", "奶油意面沙拉杯",
+  "炒面面包", "哈密瓜汽水圣代", "Vivi", "秘制可乐饼", "芝士夹心汉堡排",
+  "玉子烧", "酱汁炸猪排盖饭", "意大利波萝披萨", "起司汉堡包", "大阪烧",
+  "蜜汁红豆烧", "番茄酱铁板盖饭", "草莓可丽饼", "沙丁鱼凉面", "水果奶油三明治"
 ];
 function randomLucky(){
   let idx = Math.floor(Math.random()*luckyWords.length);
-  document.getElementById('luckyWord').textContent = "今日幸运词汇：" + luckyWords[idx];
+  document.getElementById('luckyWord').textContent = "今日幸运占卜：" + luckyWords[idx];
 }
 
 // 日志滚动（更慢）
@@ -543,11 +537,12 @@ let logScrollTimer = null;
 function startLogScroll() {
   clearTimeout(logScrollTimer);
   const logs = [
-    "力量不是为了骄傲，而是为了被理解的。      ",
-    "动为了被理解，首先必须是被信任的存在。     ",
-    "【通告】本周六体检项目将增加“光感稳定性测试”，请保持饮食规律。    ",
-    "【通告】2000年度夏日祭即将开展。      ",
-    "【通告】近期偶发咳嗽与头痛案例并非感染性疾病， 如有身体不适请及时就医。     ",
+    "力量不是为了骄傲，而是应该被理解的存在。      ",
+    "为了被理解，首先必须是被信任的存在。      ",
+    "【通告】本周六体检项目将增加“光感稳定性测试”，请保持饮食规律。      ",
+    "【通告】近期偶发咳嗽与头痛案例并非感染性疾病， 如有身体不适请及时就医。      ",
+    "【小v提示】2000年度夏日祭即将开展！      ",
+    "      "
   ];
   let logIdx = 0;
   const logBox = document.getElementById('logText');
