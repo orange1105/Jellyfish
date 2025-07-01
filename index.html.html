@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>朝奈津学園 欢迎页</title>
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+  <style>
+    body {
+      background: #07406a;
+      margin: 0;
+      padding: 0;
+      font-family: 'Press Start 2P', 'PingFang SC', 'Microsoft YaHei', 'sans-serif';
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    canvas#jellyCanvas {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .music-btn {
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      z-index: 10;
+      background: rgba(255,255,255,0.93);
+      border: none;
+      border-radius: 50%;
+      padding: 13px 17px 13px 17px;
+      font-size: 25px;
+      cursor: pointer;
+      box-shadow: 0 0 8px #52e8ff7a;
+      transition: background .18s;
+    }
+    .music-btn:hover { background: #dcf6ff; }
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 22px;
+      z-index: 10;
+      background: rgba(255,255,255,0.9);
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 18px;
+      color: #2a3191;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 2px 8px #8ed6f4aa;
+      display: none;
+      transition: background .16s;
+    }
+    .back-btn.show { display: block; }
+    .main-container {
+      position: relative;
+      z-index: 2;
+      width: 100vw;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: auto;
+    }
+    .welcome-arc {
+      width: 480px;
+      height: 130px;
+      margin: 0 auto 18px auto;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      position: relative;
+      user-select: none;
+    }
+    .welcome-arc span {
+      display: inline-block;
+      font-family: inherit;
+      font-size: 46px;
+      font-weight: bold;
+      margin: 0 4px;
+      text-shadow:
+        0 2px 8px #fff6,
+        0 0 22px currentColor,
+        1px 4px 8px #0002;
+      position: relative;
+      animation: bounce-arc 1.6s cubic-bezier(.4,1.6,.68,1.06) infinite;
+    }
+    .welcome-arc span:nth-child(1) { color:#ff3b30; transform: rotate(-26deg) translateY(16px); animation-delay: 0s;}
+    .welcome-arc span:nth-child(2) { color:#ff9500; transform: rotate(-17deg) translateY(8px); animation-delay: 0.12s;}
+    .welcome-arc span:nth-child(3) { color:#ffd600; transform: rotate(-8deg)  translateY(2px); animation-delay: 0.22s;}
+    .welcome-arc span:nth-child(4) { color:#4cd964; transform: rotate(0deg)   translateY(-4px);animation-delay: 0.34s;}
+    .welcome-arc span:nth-child(5) { color:#5ac8fa; transform: rotate(8deg)   translateY(2px); animation-delay: 0.22s;}
+    .welcome-arc span:nth-child(6) { color:#007aff; transform: rotate(17deg)  translateY(8px); animation-delay: 0.12s;}
+    .welcome-arc span:nth-child(7) { color:#af52de; transform: rotate(26deg)  translateY(16px);animation-delay: 0s;}
+    @keyframes bounce-arc {
+      0%,100% { filter: brightness(1) drop-shadow(0 0 8px #fff7); }
+      20%     { filter: brightness(1.18) drop-shadow(0 0 16px #fff); }
+      40%     { transform: translateY(-10px) scale(1.1) rotate(var(--angle,0deg)); filter: brightness(1.25) drop-shadow(0 0 28px #fff); }
+      60%     { filter: brightness(1.12) drop-shadow(0 0 18px #fff6);}
+    }
+    .school-title {
+      font-size: 46px;
+      color: #f1f1f1;
+      font-weight: bold;
+      letter-spacing: 8px;
+      margin-bottom: 8px;
+      text-shadow: 2px 2px 8px #014070;
+    }
+    .school-en {
+      font-size: 25px;
+      color: #e2e2e2;
+      margin-bottom: 32px;
+      letter-spacing: 4px;
+    }
+    .button-row {
+      display: flex;
+      gap: 38px;
+      margin-bottom: 0;
+    }
+    .main-btn {
+      background: rgba(13,60,133,0.86);
+      border: 2.2px solid #35ffe3;
+      color: #fff;
+      font-size: 25px;
+      padding: 18px 40px;
+      border-radius: 13px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #1bfff580;
+      font-family: inherit;
+      outline: none;
+      pointer-events: auto;
+      transition: 0.16s;
+    }
+    .main-btn:hover {
+      background: #13c5f6;
+      color: #084065;
+      box-shadow: 0 0 18px #fff, 0 0 30px #3df9fa;
+    }
+    .input-area {
+      margin-top: 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      pointer-events: auto;
+    }
+    .input-name {
+      font-size: 22px;
+      color: #fff;
+      background: #077;
+      border: 2px solid #44ffe2;
+      border-radius: 8px;
+      padding: 12px 18px;
+      outline: none;
+      font-family: inherit;
+    }
+    .hidden { display: none; }
+    /* 主页面部分 */
+    .mainPage-content {
+      padding: 44px 10vw 32px 10vw;
+      background: rgba(245,248,255,0.94);
+      border-radius: 22px;
+      margin-top: 34px;
+      max-width: 980px;
+      margin-left:auto; margin-right:auto;
+      box-shadow: 0 6px 32px #13477117;
+      position: relative;
+    }
+    .big-welcome {
+      font-size: 34px;
+      color: #2a3191;
+      font-weight: bold;
+      letter-spacing: 2.2px;
+      margin-bottom: 22px;
+      text-align: center;
+      text-shadow: 1px 3px 12px #8ecaff88;
+    }
+    .scroll-logs {
+      background: #d1ebffbb;
+      border-radius: 8px;
+      margin: 0 auto 22px auto;
+      padding: 11px 20px;
+      font-size: 17px;
+      color: #173778;
+      height: 34px;
+      width: 97%;
+      overflow: hidden;
+      white-space: nowrap;
+      box-shadow: 0 2px 10px #e7f4ff55;
+      position: relative;
+      border: 1.2px dashed #b3ddff;
+    }
+    .log-txt {
+      display: inline-block;
+      animation: logScroll 13s linear infinite;
+    }
+    @keyframes logScroll {
+      from { transform: translateX(95%);}
+      to { transform: translateX(-110%);}
+    }
+    .sections-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 26px;
+      margin-bottom: 30px;
+    }
+    .section-card {
+      background: linear-gradient(135deg,#f6f8fc 60%, #e3e8fd 100%);
+      box-shadow: 0 6px 20px #b8d1ff22;
+      border-radius: 14px;
+      padding: 24px 16px 16px 16px;
+      cursor: pointer;
+      transition: box-shadow 0.2s,transform 0.2s;
+      position: relative;
+      min-height: 94px;
+      margin-bottom: 8px;
+    }
+    .section-card:hover {
+      box-shadow: 0 8px 30px #31caff66,0 0 0 #fff0;
+      transform: scale(1.035);
+    }
+    .section-title {
+      font-size: 21px;
+      font-weight: bold;
+      color: #3b379c;
+      margin-bottom: 7px;
+      text-decoration: underline;
+      letter-spacing: 1px;
+      user-select: none;
+    }
+    .section-detail, .faq-detail, .note-detail, .star-detail {
+      display: none;
+      margin-top: 12px;
+      font-size: 15px;
+      color: #26396e;
+      background: #e9f0ffcc;
+      border-radius: 8px;
+      padding: 14px 12px 8px 12px;
+      box-shadow: 0 2px 7px #c4e1ff18;
+    }
+    .section-card.active .section-detail,
+    .section-card.active .faq-detail,
+    .section-card.active .note-detail,
+    .section-card.active .star-detail {
+      display: block;
+      animation: appear 0.36s;
+    }
+    @keyframes appear { from {opacity:0;transform:translateY(28px);} to {opacity:1;transform:translateY(0);} }
+    /* 人设卡片 */
+    .star-title {
+      font-size: 18px;
+      color: #ff39c3;
+      font-weight: bold;
+      letter-spacing: 2px;
+      animation: shine 1.7s infinite alternate;
+      margin-bottom: 6px;
+    }
+    @keyframes shine { 
+      from { filter: drop-shadow(0 0 8px #ffbaff) brightness(1);}
+      to   { filter: drop-shadow(0 0 26px #ff9ffa) brightness(1.16);}
+    }
+    .person-card {
+      margin: 8px 0 10px 0;
+      border-left: 3.5px solid #b9d6f8;
+      padding-left: 10px;
+      background: #f4f8ffbb;
+      border-radius: 6px;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    /* 便利贴 */
+    .note-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 0;
+    }
+    .note-brief {
+      background: #f7eeac;
+      border-radius: 7px;
+      color: #6c5500;
+      font-size: 15px;
+      margin-bottom: 0;
+      padding: 8px 12px;
+      box-shadow: 0 2px 10px #efdfa080;
+      border: 1.5px dashed #e0c44499;
+      cursor: pointer;
+      flex: 1;
+      text-align: center;
+      transition: transform .13s;
+      user-select: none;
+    }
+    .note-brief:hover { transform: scale(1.07);}
+    .note-detail {
+      text-align: left;
+      background: #fffde7;
+      color: #5b5200;
+      font-size: 15px;
+      margin-top: 12px;
+      border: 1.5px solid #ffe174cc;
+      box-shadow: 0 2px 12px #eadaaa80;
+      padding: 13px 20px;
+    }
+    /* FAQ助手 */
+    .faq-bar { margin-bottom: 0;}
+    .faq-q {
+      font-weight: bold;
+      color: #367aaa;
+      cursor: pointer;
+      text-decoration: underline dotted;
+      margin-bottom: 2px;
+      font-size: 15px;
+      user-select: none;
+    }
+    .faq-q:hover { color: #ff70b8;}
+    .faq-detail {
+      margin: 6px 0 8px 0;
+      color: #2459a9;
+      background: #e9f0ffcc;
+      border-radius: 8px;
+      padding: 13px 16px 8px 12px;
+      font-size: 15px;
+    }
+    .footer-random {
+      margin: 18px auto 4px auto;
+      text-align: center;
+    }
+    .footer-random button {
+      background: linear-gradient(90deg,#c6f1fe 50%,#edccf7 100%);
+      border: none;
+      color: #264084;
+      font-size: 16px;
+      border-radius: 9px;
+      padding: 9px 22px;
+      box-shadow: 0 2px 12px #a7e3fc66;
+      cursor: pointer;
+      transition: box-shadow 0.18s;
+      font-weight: bold;
+      margin-top: 4px;
+    }
+    .footer-random button:hover {
+      box-shadow: 0 8px 22px #9cbee7aa;
+      background: linear-gradient(90deg,#f4e8ff 0%,#bbeaff 100%);
+      color: #772b92;
+    }
+    .quote {
+      margin-top: 9px;
+      color: #5622b6;
+      font-size: 18px;
+      min-height: 24px;
+      font-style: italic;
+      letter-spacing: 1.1px;
+    }
+  </style>
+</head>
+<body>
+<canvas id="jellyCanvas"></canvas>
+<audio id="bgMusic" loop src="good-night-lofi-cozy-chill-music-160166.mp3"></audio>
+<button id="musicBtn" class="music-btn" onclick="toggleMusic()">🎵</button>
+<button id="backBtn" class="back-btn" onclick="showWelcome()">返回首页</button>
+<div class="main-container" id="mainUI">
+  <div class="welcome-arc">
+    <span>W</span><span>E</span><span>L</span><span>C</span><span>O</span><span>M</span><span>E</span>
+  </div>
+  <div class="school-title">朝奈津学園</div>
+  <div class="school-en">SHIONATSU GAKUEN</div>
+  <div class="button-row" id="btnRow">
+    <button class="main-btn" onclick="showInput()">学生ログイン</button>
+    <button class="main-btn" onclick="showInput()">教职員ログイン</button>
+  </div>
+  <div class="input-area hidden" id="inputArea">
+    <label for="nameInput" style="color:#d6ffff;font-size:18px;">输入名字：</label>
+    <input type="text" id="nameInput" class="input-name" placeholder="请输入任意字符">
+    <button class="main-btn" onclick="enterMain()">进入</button>
+  </div>
+</div>
+<script>// 控制音频
+function toggleMusic() {
+  const audio = document.getElementById('bgMusic');
+  const btn = document.getElementById('musicBtn');
+  if (audio.paused) {
+    audio.play();
+    btn.textContent = '🎵';
+  } else {
+    audio.pause();
+    btn.textContent = '🔇';
+  }
+}
+// 显示输入区
+function showInput() {
+  document.getElementById('btnRow').classList.add('hidden');
+  document.getElementById('inputArea').classList.remove('hidden');
+}
+// 返回欢迎页
+function showWelcome() {
+  document.getElementById('backBtn').classList.remove('show');
+  document.getElementById('mainUI').innerHTML = `
+    <div class="welcome-arc">
+      <span>W</span><span>E</span><span>L</span><span>C</span><span>O</span><span>M</span><span>E</span>
+    </div>
+    <div class="school-title">朝奈津学園</div>
+    <div class="school-en">SHIONATSU GAKUEN</div>
+    <div class="button-row" id="btnRow">
+      <button class="main-btn" onclick="showInput()">学生ログイン</button>
+      <button class="main-btn" onclick="showInput()">教职員ログイン</button>
+    </div>
+    <div class="input-area hidden" id="inputArea">
+      <label for="nameInput" style="color:#d6ffff;font-size:18px;">输入名字：</label>
+      <input type="text" id="nameInput" class="input-name" placeholder="请输入任意字符">
+      <button class="main-btn" onclick="enterMain()">进入</button>
+    </div>
+  `;
+}
+
+// 进入主页面
+function enterMain() {
+  let name = document.getElementById('nameInput').value.trim();
+  document.getElementById('mainUI').innerHTML = `
+    <div class="mainPage-content">
+      <div class="big-welcome">欢迎来到朝奈津学園，<span>${name || '匿名'}</span>！</div>
+      <div class="scroll-logs">
+        <span class="log-txt" id="logText">力量不是为了骄傲，而是应该被理解的。</span>
+      </div>
+      <div class="sections-grid">
+        <!-- 校园介绍 -->
+        <div class="section-card" onclick="toggleDetail(this)">
+          <div class="section-title">🏫 校园介绍</div>
+          <div class="section-detail">
+            <b>校名：</b>朝奈津学園<br>
+            <b>课程设置：</b>各班级均开设国语、数学、外语、历史、公民五大常规课程，上课频率为1周2次。此外，依据各班级特色对以下课程作出特殊安排：
+化学课：「元素系」每周课时6节，其余班级每周课时2节，分别由两位研究员教师担任教学，元素系化学教师兼任班主任职务。名牌略写为元素系-班主任。
+
+生物课：「动物系」每周课时6节，其余班级每周课时2节，分别由两位研究员教师担任教学。动物系生物教师兼任班主任职务。名牌略写为生物系-班主任。
+
+心理课：「心理系」每周课时6节，其余班级每周课时2节，分别由两位研究员教师担任教学。心理系心理教师兼任班主任职务。名牌略写为心理系-班主任。
+
+各班级于每周二、周四进行1次体检<br>
+            <b>办学特色：</b>打破传统年级区分。通过个人能力种类进行分班，各年龄段均处于同一班级统一教学。学园实行寄宿制，无特殊情况不得离校。<br>
+            <b>位置：</b>原神户第二研究所
+          </div>
+        </div>
+        <!-- 风采展示（六月之星） -->
+        <div class="section-card" onclick="toggleDetail(this)">
+          <div class="section-title">🪽 风采展示</div>
+          <div class="star-detail">
+            <div class="star-title">六月之星</div>
+            <div class="person-card">
+              <b>姓名:</b> 冴岛硫花<br>
+              <b>性别:</b> 女<br>
+              <b>年龄:</b> 25<br>
+              <b>班级:</b> 元素系-班主任<br>
+              <b>爱好与特长:</b> 没有特长和擅长任何事似乎是同一个概念。<br>
+              <b>简介:</b> 1996年：日本化学会优秀修士论文奖，1998年：「複合分子構造における新規結合手法」获选日本高分子科学年会特别发表论文，2000年，学园第一届「吞食吧！荞麦面！」大赛冠军。<br>
+              <b>宣言:</b> 信任最高 ᕦ( ˘ᴗ˘ )ᕤ<br>
+            </div> 
+          </div>
+        </div>
+        <!-- 便利贴墙 -->
+        <div class="section-card" onclick="toggleNoteBar(this)">
+          <div class="section-title">📒 留言板</div>
+          <div class="note-bar">
+            <div class="note-brief" onclick="event.stopPropagation();showNoteDetail(0)">“【急募】谁来阻止下我的舍友！?”</div>
+            <div class="note-brief" onclick="event.stopPropagation();showNoteDetail(1)">“元素系期末实验爆炸！助理君转生为飞行员？”</div>
+            <div class="note-brief" onclick="event.stopPropagation();showNoteDetail(2)">“【咨询】精神系的同学在梦里给我穿女仆服的事”</div>
+            <div class="note-brief" onclick="event.stopPropagation();showNoteDetail(3)">“女生宿舍的洗衣机里萌生了人格？正在随意区分衣服的颜色”</div>
+          </div>
+          <div class="note-detail" id="noteDetailBox" style="display:none;"></div>
+        </div>
+        <!-- 小v助手 -->
+        <div class="section-card" onclick="toggleDetail(this)">
+          <div class="section-title">🤖 小v助手区</div>
+          <div class="faq-bar">
+            <div class="faq-q" onclick="event.stopPropagation();showFaqDetail(0)">Q: 不能出校，我想要買合☆道泡麵怎麼辦？</div>
+            <div class="faq-detail" style="display:none;">A: 校內有專門的采派人員。每週統一進行采買。</div>
+            <div class="faq-q" onclick="event.stopPropagation();showFaqDetail(1)">Q: 我生病了肚子痛，該怎麼辦？</div>
+            <div class="faq-detail" style="display:none;">A: 教學樓一樓左拐前往醫務室。</div>
+            <div class="faq-q" onclick="event.stopPropagation();showFaqDetail(2)">Q: 什麼是「Vivi」？</div>
+            <div class="faq-detail" style="display:none;">A: 學園内置問答機器人，該系統由研究員 橘 獨家研發。</div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-random">
+        <button onclick="randomLucky()">点我获得今日幸运占卜</button>
+        <div class="quote" id="luckyWord"></div>
+      </div>
+    </div>
+  `;
+  document.getElementById('backBtn').classList.add('show');
+  startLogScroll();
+}
+
+// 分区展开逻辑
+function toggleDetail(card) {
+  let all = document.querySelectorAll('.section-card');
+  all.forEach(c=>{ if(c!==card) c.classList.remove('active'); });
+  card.classList.toggle('active');
+}
+
+// note板展开逻辑
+function toggleNoteBar(card) {
+  let all = document.querySelectorAll('.section-card');
+  all.forEach(c=>{ if(c!==card) c.classList.remove('active'); });
+  card.classList.toggle('active');
+  document.getElementById('noteDetailBox').style.display = 'none';
+}
+function showNoteDetail(idx) {
+  const notes = [
+    "“动物系的我的室友（猫系），昨晚又倒着爬墙的事......而且光着脚.....真的别这样啊！？”",
+    "“本该学习水蒸气的再利用....但是氧气瓶倒下了！酒精灯倒下了！？然后有人拿着的氢气气球...结果教室大门完全飞走了！💧巨大的声音和超高速运动门袭击了助理君..像在驾驶战斗机一样ww”",
+    "“他说，「你穿着女仆服说'照烧鲭鱼套餐，主人♡」。...该怎样在梦里反击呢？”",
+    "“报告说黑色内衣和灰色袜子在同一个篮子里，只有白色制服被热水洗了。是精神系的影响，还是某人的实验结果...？→作为对策：在洗衣机上贴上“我不是实验品！”的贴纸。”"
+  ];
+  let noteBox = document.getElementById('noteDetailBox');
+  noteBox.textContent = notes[idx];
+  noteBox.style.display = 'block';
+}
+
+// FAQ逻辑
+function showFaqDetail(idx) {
+  let details = document.querySelectorAll('.faq-detail');
+  details.forEach((d,i)=>{ d.style.display = i===idx ? 'block' : 'none'; });
+}
+
+// 幸运占卜
+const luckyWords = [
+  "照烧鸡扒蛋包饭", "咖喱鱼饼", "中华小笼包", "地狱叉烧拉面", "奶油意面沙拉杯",
+  "炒面面包", "哈密瓜汽水圣代", "Vivi", "秘制可乐饼", "芝士夹心汉堡排",
+  "玉子烧", "酱汁炸猪排盖饭", "意大利波萝披萨", "起司汉堡包", "大阪烧",
+  "蜜汁红豆烧", "番茄酱铁板盖饭", "草莓可丽饼", "沙丁鱼凉面", "水果奶油三明治"
+];
+function randomLucky(){
+  let idx = Math.floor(Math.random()*luckyWords.length);
+  document.getElementById('luckyWord').textContent = "今日幸运占卜：" + luckyWords[idx];
+}
+
+// 日志滚动（更慢）
+let logScrollTimer = null;
+function startLogScroll() {
+  clearTimeout(logScrollTimer);
+  const logs = [
+    "力量不是为了骄傲，而是应该被理解的存在。      ",
+    "为了被理解，首先必须是被信任的存在。      ",
+    "【通告】本周六体检项目将增加“光感稳定性测试”，请保持饮食规律。      ",
+    "【通告】近期偶发咳嗽与头痛案例并非感染性疾病， 如有身体不适请及时就医。      ",
+    "【小v提示】2000年度夏日祭即将开展！      ",
+    "      "
+  ];
+  let logIdx = 0;
+  const logBox = document.getElementById('logText');
+  function scrollLog(){
+    logBox.textContent = logs[logIdx];
+    logBox.style.animation = 'none';
+    logBox.offsetHeight; // reflow
+    logBox.style.animation = null;
+    logIdx = (logIdx+1)%logs.length;
+    logScrollTimer = setTimeout(scrollLog, 13000);
+  }
+  scrollLog();
+}
+
+// 水母动画
+const jellySrc = 'jellyfish_cleaned.png'; 
+const jellyNum = 8;
+const jellyImgs = [];
+let loaded = 0;
+for(let i=0; i<jellyNum; i++){
+  const img = new Image();
+  img.src = jellySrc;
+  img.onload = () => loaded++;
+  jellyImgs.push(img);
+}
+const canvas = document.getElementById('jellyCanvas');
+const ctx = canvas.getContext('2d');
+let w = window.innerWidth, h = window.innerHeight;
+function resize() {
+  w = window.innerWidth;
+  h = window.innerHeight;
+  canvas.width = w;
+  canvas.height = h;
+}
+window.addEventListener('resize', resize);
+resize();
+let jellies = [];
+function resetJelly(i) {
+  const scale = 0.36 + Math.random() * 0.35;
+  return {
+    x: Math.random() * w,
+    y: h + 100 + Math.random()*300,
+    speedY: 0.09 + Math.random() * 0.14,
+    amp: 15 + Math.random()*32,
+    freq: 0.002 + Math.random()*0.001,
+    t: Math.random() * 3000,
+    scale,
+    opacity: 0.70 + Math.random()*0.19
+  }
+}
+function initJellies() {
+  jellies = [];
+  for(let i=0; i<jellyNum; i++) jellies.push(resetJelly(i));
+}
+initJellies();
+function drawJellies(ts) {
+  ctx.clearRect(0,0,w,h);
+  for(let i=0; i<jellyNum; i++) {
+    if(!jellyImgs[i].complete) continue;
+    const j = jellies[i];
+    const img = jellyImgs[i];
+    const dx = Math.sin(j.t * j.freq) * j.amp;
+    ctx.save();
+    ctx.globalAlpha = j.opacity;
+    ctx.translate(j.x + dx, j.y);
+    ctx.scale(j.scale, j.scale);
+    ctx.drawImage(img, -img.width/2, -img.height/2);
+    ctx.restore();
+    j.y -= j.speedY;
+    j.t += 7;
+    if(j.y < -120) {
+      Object.assign(j, resetJelly(i));
+      j.y = h + 100 + Math.random()*100;
+    }
+  }
+  requestAnimationFrame(drawJellies);
+}
+let started = false;
+function startAnim() {
+  if(loaded >= jellyNum && !started){
+    started = true;
+    drawJellies();
+  } else if(!started) {
+    setTimeout(startAnim, 70);
+  }
+}
+startAnim();
+
+// 自动播放音乐
+window.onload = function(){
+  document.getElementById('bgMusic').volume = 0.55;
+  document.getElementById('bgMusic').play().catch(()=>{});
+}
+</script>
+</body>
+</html>
