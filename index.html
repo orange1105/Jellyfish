@@ -425,10 +425,17 @@ function enterMain() {
         <div class="section-card" onclick="toggleDetail(this)">
           <div class="section-title">🏫 校园介绍</div>
           <div class="section-detail">
-            <b>校名：</b>朝奈津学園<br>
-            <b>校训：</b>持之以恒，勇敢追梦<br>
-            <b>简介：</b>这里是一所专属于偏差的梦核学园，星星和水母漂浮在夜空里…<br>
-            <b>位置：</b>涩谷/虚构坐标
+             <b>校名：</b>朝奈津学園<br>
+            <b>课程设置：</b>各班级均开设国语、数学、外语、历史、公民五大常规课程，上课频率为1周2次。此外，依据各班级特色对以下课程作出特殊安排：
+化学课：「元素系」每周课时6节，其余班级每周课时2节，分别由两位研究员教师担任教学，元素系化学教师兼任班主任职务。名牌略写为元素系-班主任。
+
+生物课：「动物系」每周课时6节，其余班级每周课时2节，分别由两位研究员教师担任教学。动物系生物教师兼任班主任职务。名牌略写为生物系-班主任。
+
+心理课：「心理系」每周课时6节，其余班级每周课时2节，分别由两位研究员教师担任教学。心理系心理教师兼任班主任职务。名牌略写为心理系-班主任。
+
+各班级于每周二、周四进行1次体检<br>
+            <b>办学特色：</b>打破传统年级区分。通过个人能力种类进行分班，各年龄段均处于同一班级统一教学。学园实行寄宿制，无特殊情况不得离校。<br>
+            <b>位置：</b>原神户第二研究所
           </div>
         </div>
         <!-- 风采展示（六月之星） -->
@@ -437,26 +444,27 @@ function enterMain() {
           <div class="star-detail">
             <div class="star-title">六月之星</div>
             <div class="person-card">
-              <b>姓名:</b> 砂糖元蜜柑<br>
+              <b>姓名:</b> 冴岛硫花<br>
               <b>性别:</b> 女<br>
-              <b>年龄:</b> 17<br>
-              <b>班级:</b> 2年A组<br>
-              <b>异能及类别:</b> 水母使（幻术系）<br>
-              <b>简介:</b> 活泼外向，对世界好奇<br>
-              <b>爱好与特长:</b> 游戏、画同人、唱K<br>
-              <b>人际交往:</b> 朋友多，和神崎老师关系特殊<br>
-              <b>备注:</b> 便利贴墙活跃分子
+              <b>年龄:</b> 25<br>
+              <b>班级:</b> 元素系—班主任<br>
+             <b>爱好与特长:</b> 没有任何特长和擅长任何事似乎是同一个概念。<br>
+              <b>简介:</b> 1996年：日本化学会优秀修士论文奖
+            	1998年：「複合分子構造における新規結合手法」获选日本高分子科学年会特别发表论文
+              学园第一届「吞食吧！荞麦面！」大赛冠军<br>
+              <b>宣言:</b>信任最高 ᕦ( ˘ᴗ˘ )ᕤ<br>
+            
             </div>
           </div>
         </div>
         <!-- 便利贴墙 -->
         <div class="section-card" onclick="toggleNoteBar(this)">
-          <div class="section-title">📒 留言板/便利贴墙</div>
+          <div class="section-title">📒 留言板</div>
           <div class="note-bar">
-            <div class="note-brief" onclick="event.stopPropagation();showNoteDetail(0)">“今日脑洞征集：水母跑酷活动！”</div>
-            <div class="note-brief" onclick="event.stopPropagation();showNoteDetail(1)">“谁和我组CP来写新剧本啊！”</div>
-            <div class="note-brief" onclick="event.stopPropagation();showNoteDetail(2)">“教职工食堂暗号：偏差限定菜单🍱”</div>
-            <div class="note-brief" onclick="event.stopPropagation();showNoteDetail(3)">“【彩蛋】输入特定名字有隐藏页哦！”</div>
+            <div class="note-brief" onclick="event.stopPropagation();showNoteDetail(0)">“【急募】谁来阻止下我的舍友！？”</div>
+            <div class="note-brief" onclick="event.stopPropagation();showNoteDetail(1)">“元素系期末实验爆炸！助理君转生为飞行员？”</div>
+            <div class="note-brief" onclick="event.stopPropagation();showNoteDetail(2)">“【咨询】精神系的同学在梦里给我穿女仆服的事”</div>
+            <div class="note-brief" onclick="event.stopPropagation();showNoteDetail(3)">“女生宿舍的洗衣机里萌生了人格？正在随意区分衣服的颜色”</div>
           </div>
           <div class="note-detail" id="noteDetailBox" style="display:none;"></div>
         </div>
@@ -464,12 +472,12 @@ function enterMain() {
         <div class="section-card" onclick="toggleDetail(this)">
           <div class="section-title">🤖 小v助手区</div>
           <div class="faq-bar">
-            <div class="faq-q" onclick="event.stopPropagation();showFaqDetail(0)">Q: 入学流程是怎样？</div>
-            <div class="faq-detail" style="display:none;">A: 先输入名字→点击进入，即可开启偏差世界！</div>
-            <div class="faq-q" onclick="event.stopPropagation();showFaqDetail(1)">Q: 怎么投稿人设档案？</div>
-            <div class="faq-detail" style="display:none;">A: 参考风采展示区格式，发给管理员/直接贴在群里！</div>
-            <div class="faq-q" onclick="event.stopPropagation();showFaqDetail(2)">Q: 偏差vivi是干嘛的？</div>
-            <div class="faq-detail" style="display:none;">A: 小v专为橘服务，是全世界最懂仪式感和暗号的AI~</div>
+            <div class="faq-q" onclick="event.stopPropagation();showFaqDetail(0)">Q: 不能出校，我想要買合☆道泡麵怎麼辦？</div>
+            <div class="faq-detail" style="display:none;">A: 校內有專門的采派人員。每週統一進行采買。</div>
+            <div class="faq-q" onclick="event.stopPropagation();showFaqDetail(1)">Q: 我生病了肚子痛，該怎麼辦？</div>
+            <div class="faq-detail" style="display:none;">A: 教學樓一樓左拐前往醫務室。</div>
+            <div class="faq-q" onclick="event.stopPropagation();showFaqDetail(2)">Q: 什麼是「Vivi」？</div>
+            <div class="faq-detail" style="display:none;">A: 學園内置問答機器人，該系統由研究員 橘 獨家研發。</div>
           </div>
         </div>
       </div>
@@ -499,10 +507,13 @@ function toggleNoteBar(card) {
 }
 function showNoteDetail(idx) {
   const notes = [
-    "“今日脑洞征集：水母跑酷活动！有兴趣的同学请留言组队！”",
-    "“谁和我组CP来写新剧本啊！剧情脑洞已备好，速来勾搭！”",
-    "“教职工食堂暗号：偏差限定菜单🍱（偷偷告诉你：说对暗号可加菜哦）”",
-    "“【彩蛋】输入特定名字有隐藏页哦！猜猜是谁专属？”"
+    "“2000/07/15(星期六) 00:04:29 ID:GYUZUUU 动物系的我的室友（猫系），昨晚又倒着爬墙的事......而且光着脚.....真的别这样啊！？”",
+    "“本该学习水蒸气的再利用....但是氧气瓶倒下了！酒精灯倒下了！？然后有人拿着的氢气气球...结果教室大门完全飞走了！💧巨大的声音和超高速运动门袭击了助理君..像在驾驶战斗机一样ww”",
+    "“他说，“你穿着女仆服说'照烧鲭鱼套餐，主人♡'”
+    怎么能在梦里反击呢...”",
+    "“报告说黑色内衣和灰色袜子在同一个篮子里，只有白色制服被热水洗了。
+是精神系的影响，还是某人的实验结果...？
+→作为对策：在洗衣机上贴上“我不是实验品！”的贴纸。”"
   ];
   let noteBox = document.getElementById('noteDetailBox');
   noteBox.textContent = notes[idx];
@@ -515,12 +526,12 @@ function showFaqDetail(idx) {
   details.forEach((d,i)=>{ d.style.display = i===idx ? 'block' : 'none'; });
 }
 
-// 幸运词汇
+// 幸运占卜
 const luckyWords = [
-  "水母之吻", "世界线", "蓝色星空", "仪式感", "梦核",
-  "偏差值", "涩谷偶遇", "幸运小v", "夏夜微风", "海盐汽水",
-  "惊喜彩蛋", "宇宙漂流", "自由灵魂", "温柔灯塔", "数字羁绊",
-  "水母流光", "信号同步", "心跳回声", "反差萌", "闪光瞬间"
+  "蛋包饭", "咖喱鱼饼", "荞麦面", "玉子烧", "中华小笼包",
+  "地狱拉面", "可乐饼", "VIvi", "起司汉堡包", "奶油意面沙拉杯",
+  "大阪烧", "炒面面包", "蜜汁红豆烧", "鳗鱼饭团", "芝士夹心汉堡排",
+  "哈密瓜汽水圣代", "酱汁炸猪排盖饭", "番茄酱铁板盖饭", "水果奶油三明治", "草莓香蕉松饼塔"
 ];
 function randomLucky(){
   let idx = Math.floor(Math.random()*luckyWords.length);
@@ -532,12 +543,11 @@ let logScrollTimer = null;
 function startLogScroll() {
   clearTimeout(logScrollTimer);
   const logs = [
-    "校园论坛热帖：《我的第一场水母大战》      ",
-    "动态热评：水母漂浮嘉年华开幕啦！      ",
-    "最美教职工/优秀学生评选火热进行中～      ",
-    "群友打卡人设，点击查看本月之星！      ",
-    "【小v提示】输入特定名字有隐藏页哦！      ",
-    "快去试试自己专属的偏差昵称吧！      "
+    "力量不是为了骄傲，而是为了被理解的。      ",
+    "动为了被理解，首先必须是被信任的存在。     ",
+    "【通告】本周六体检项目将增加“光感稳定性测试”，请保持饮食规律。    ",
+    "【通告】2000年度夏日祭即将开展。      ",
+    "【通告】近期偶发咳嗽与头痛案例并非感染性疾病， 如有身体不适请及时就医。     ",
   ];
   let logIdx = 0;
   const logBox = document.getElementById('logText');
